@@ -115,7 +115,8 @@ class NewsManager:
     def __init__(self, base_url):
         self.news_cache = {}
         self.latest_headlines = []
-        self.base_url = base_url
+        # 去掉末尾斜杠, 否则与 "/api/s..." 拼接会产生双斜杠, 被源站路由到首页 (返回 HTML 而非 JSON)
+        self.base_url = base_url.rstrip("/")
         
     def normalize_source(self, source: str) -> str:
         """将输入的新闻源名称转换为标准名称"""
