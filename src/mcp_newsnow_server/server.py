@@ -178,7 +178,13 @@ class NewsManager:
             }
         
         headers = {
-            "Accept": "application/json"
+            "Accept": "application/json",
+            # 源站位于 Cloudflare 后端，会拦截非浏览器 UA（如 python-httpx/*），需伪装为常见浏览器
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0.0.0 Safari/537.36"
+            ),
         }
         try:
             async with httpx.AsyncClient(timeout=300.0) as client:  # 设置300秒超时
